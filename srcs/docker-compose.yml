@@ -2,13 +2,24 @@ version: "3"
 
 services:
   mariadb:
-    build: ./requirements/mariadb/
+    build:
+      context: ./requirements/mariadb/
+      args:
+        - DB_NAME=${DB_NAME}
+        - DB_USER=${DB_USER}
+        - DB_PASSWORD=${DB_PASSWORD}
+        # - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
     image: mariadb:inception
     container_name: mariadb
     volumes:
       - mariadb-volume:/var/lib/mysql
     networks:
       - inception
+    environment:
+      - DB_NAME
+      - DB_USER
+      - DB_PASSWORD
+      - DB_ROOT_PASSWORD
 
   wordpress:
     build: ./requirements/wordpress/
@@ -20,6 +31,11 @@ services:
       - wordpress-volume:/var/www/html
     networks:
       - inception
+    env_file: .env
+    environment:
+      - DB_NAME
+      - DB_USER
+      - DB_PASSWORD
 
   nginx:
     build: ./requirements/nginx/
