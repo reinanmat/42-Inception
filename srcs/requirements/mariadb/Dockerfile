@@ -1,18 +1,21 @@
 FROM debian:oldstable
 
-RUN apt-get update && apt-get install -y \
-	mariadb-server
+ARG DB_NAME
+ARG DB_USER
+ARG DB_PASSWORD
+
+RUN apt update && apt upgrade -y && \
+	apt install -y \
+	mariadb-server && \
+	rm -rf /var/lib/apt/lists/*
 
 RUN echo "[mysqld] \n\
-	skip-networking=0 \n\
-	skip-bind-address" >> /etc/mysql/my.cnf
+		skip-networking=0 \n\
+		skip-bind-address" >> /etc/mysql/my.cnf
 
-RUN service mariadb start && \
-	mariadb -u root -e \
-	"CREATE DATABASE IF NOT EXISTS wordpress_db; \
-	CREATE USER 'wuser'@'%' identified by 'wpass'; \
-	GRANT ALL ON wordpress_db.* TO 'wuser'@'%' IDENTIFIED BY 'wpass'; \
-	FLUSH PRIVILEGES;" && \
-	service mariadb stop
+COPY ./tools/mariadbinit.sh /tmp/mariadbinit.sh
+RUN chmod +x /tmp/mariadbinit.sh
 
-ENTRYPOINT ["mysqld_safe"]
+RUN /tmp/mariadbinit.sh
+
+CMD ["mysqld_safe"]
