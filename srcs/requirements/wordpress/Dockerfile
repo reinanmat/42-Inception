@@ -9,6 +9,7 @@ RUN apt-get update && apt-get upgrade -y && \
 	php-mysql \
 	mariadb-client \
 	wordpress \
+	sendmail \
 	wget && \
 	rm -rf /var/lib/apt/lists/*
 	
