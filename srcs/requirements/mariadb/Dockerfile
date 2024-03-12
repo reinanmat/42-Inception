@@ -13,10 +13,11 @@ RUN mkdir -p /var/run/mysqld && \
 	chown -R mysql:mysql /var/run/mysqld && \
 	chmod 777 /var/run/mysqld
 
-RUN echo "[mysqld] \n\
-		skip-networking=0 \n\
-		skip-bind-address" >> /etc/mysql/my.cnf
+# RUN echo "[mysqld] \n\
+# 		skip-networking=0 \n\
+# 		skip-bind-address" >> /etc/mysql/my.cnf
 
+COPY ./config/my.cnf /etc/mysql/my.cnf
 COPY ./tools/mariadbinit.sh /tmp/mariadbinit.sh
 RUN chmod +x /tmp/mariadbinit.sh
 
