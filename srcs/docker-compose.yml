@@ -8,25 +8,30 @@ services:
         - DB_NAME=${DB_NAME}
         - DB_USER=${DB_USER}
         - DB_PASSWORD=${DB_PASSWORD}
-        # - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
     image: mariadb:inception
     container_name: mariadb
+    healthcheck:
+      test: mysqladmin ping -h localhost -u root
+      interval: 3s
+      timeout: 3s
+      retries: 5
     volumes:
       - mariadb-volume:/var/lib/mysql
     networks:
       - inception
+    env_file: .env
     environment:
       - DB_NAME
       - DB_USER
       - DB_PASSWORD
-      - DB_ROOT_PASSWORD
 
   wordpress:
     build: ./requirements/wordpress/
     image: wordpress:inception
     container_name: wordpress
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     volumes:
       - wordpress-volume:/var/www/html
     networks:
@@ -36,6 +41,12 @@ services:
       - DB_NAME
       - DB_USER
       - DB_PASSWORD
+      - WP_ROOT_USER
+      - WP_ROOT_EMAIL
+      - WP_ROOT_PASSWORD
+      - WP_USER
+      - WP_EMAIL
+      - WP_PASSWORD
 
   nginx:
     build: ./requirements/nginx/
