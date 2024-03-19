@@ -48,6 +48,15 @@ services:
       - WP_EMAIL
       - WP_PASSWORD
 
+  static-website:
+    build: ./requirements/bonus/static-website/
+    image: static-website:inception
+    container_name: static-website
+    networks:
+      - inception
+    ports:
+      - 4242:4242
+
   nginx:
     build: ./requirements/nginx/
     image: nginx:inception
