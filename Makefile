@@ -1,13 +1,14 @@
 LOGIN=revieira
 DOCKER_COMPOSE_PATH=./srcs/docker-compose.yml
+VOLUMES= /home/$(LOGIN)/data/mariadb \
+		 /home/$(LOGIN)/data/wordpress \
+		 /home/$(LOGIN)/data/uptime-kuma
 
 all: up
 
 setup:
-	sudo chmod a+w /etc/hosts
-	sudo cat /etc/hosts | grep $(LOGIN) || sudo echo "127.0.0.1 $(LOGIN).42.fr" >> /etc/hosts
-	sudo mkdir -p /home/$(LOGIN)/data/mariadb
-	sudo mkdir -p /home/$(LOGIN)/data/wordpress
+	sudo bash -c 'cat /etc/hosts | grep $(LOGIN) &> /dev/null || echo "127.0.0.1 $(LOGIN).42.fr" >> /etc/hosts'
+	sudo mkdir -p $(VOLUMES)
 
 up: setup
 	docker-compose -f $(DOCKER_COMPOSE_PATH) up -d
@@ -16,9 +17,12 @@ down:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) down
 
 delete-volumes:
-	docker volume rm $(shell docker volume ls -q)
-	sudo rm -rf /home/$(LOGIN)/data/mariadb/*
-	sudo rm -rf /home/$(LOGIN)/data/wordpress/*
+	@echo -n "Delete volumes? (Y/n) "
+	@read -r answer; \
+	if [ "$$answer" = "Y" ] || [ "$$answer" = "y" ]; then \
+		docker volume rm $$(docker volume ls -q); \
+		sudo rm -rf $(VOLUMES); \
+	fi
 
 ls:
 	@echo "IMAGES:"
@@ -33,7 +37,7 @@ ls:
 clean:
 	docker image prune -af
 
-fclean: delete-volumes
+fclean: down delete-volumes
 	docker system prune -fa
 
 re: fclean all
