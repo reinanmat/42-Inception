@@ -33,7 +33,7 @@ ls:
 clean:
 	docker image prune -af
 
-fclean: delete-volumes
+fclean: down delete-volumes
 	docker system prune -fa
 
 re: fclean all
