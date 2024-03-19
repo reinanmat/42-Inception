@@ -60,6 +60,20 @@ services:
       - inception
     ports:
       - 443:443
+
+  uptime-kuma:
+    build: ./requirements/bonus/uptime-kuma/
+    image: uptime-kuma:inception
+    container_name: uptime-kuma
+    depends_on:
+      - nginx
+    volumes:
+      - uptime-kuma-volume:/uptime-kuma/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - inception
+    ports:
+      - 3001:3001
     
 volumes:
   mariadb-volume:
@@ -77,6 +91,14 @@ volumes:
       o: bind
       type: none
       device: /home/revieira/data/wordpress
+
+  uptime-kuma-volume:
+    name: uptime-kuma-volume
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/revieira/data/uptime-kuma
 
 networks:
   inception:
