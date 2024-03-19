@@ -2,8 +2,8 @@ FROM debian:oldstable
 
 WORKDIR /var/www/html/
 
-RUN apt-get update && apt-get upgrade -y && \
-	apt-get install -y \
+RUN apt update && apt upgrade -y && \
+	apt install -y \
 	php7.4 \
 	php-fpm \
 	php-mysql \
