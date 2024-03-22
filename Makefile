@@ -2,6 +2,7 @@ LOGIN=revieira
 DOCKER_COMPOSE_PATH=./srcs/docker-compose.yml
 VOLUMES= /home/$(LOGIN)/data/mariadb \
 		 /home/$(LOGIN)/data/wordpress \
+		 /home/$(LOGIN)/data/adminer \
 		 /home/$(LOGIN)/data/uptime-kuma
 
 all: up
