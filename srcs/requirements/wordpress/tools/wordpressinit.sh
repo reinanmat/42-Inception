@@ -3,7 +3,7 @@
 if [ -f /var/www/wordpress/wp-config-sample.php ]; then
 	rm -rf /var/www/wordpress/wp-config-sample.php
 	wp core install --allow-root \
-		--path=/var/www/html \
+		--path=/var/www/wordpress \
 		--title="Inception" \
 		--url=$DOMAIN_NAME \
 		--admin_user=$WP_ROOT_USER \
@@ -11,7 +11,7 @@ if [ -f /var/www/wordpress/wp-config-sample.php ]; then
 		--admin_email=$WP_ROOT_EMAIL
 
 	wp user create --allow-root	\
-		--path=/var/www/html \
+		--path=/var/www/wordpress \
 		"$WP_USER" "$WP_EMAIL" \
 		--user_pass=$WP_PASSWORD \
 		--role='author'
