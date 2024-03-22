@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ -f /var/www/html/wp-config-sample.php ]; then
-	rm -rf /var/www/html/wp-config-sample.php
+if [ -f /var/www/wordpress/wp-config-sample.php ]; then
+	rm -rf /var/www/wordpress/wp-config-sample.php
 	wp core install --allow-root \
 		--path=/var/www/html \
 		--title="Inception" \
