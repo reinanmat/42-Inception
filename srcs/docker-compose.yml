@@ -33,7 +33,7 @@ services:
       mariadb:
         condition: service_healthy
     volumes:
-      - wordpress-volume:/var/www/html
+      - wordpress-volume:/var/www/wordpress
     networks:
       - inception
     env_file: .env
@@ -48,6 +48,31 @@ services:
       - WP_EMAIL
       - WP_PASSWORD
 
+  nginx:
+    build: ./requirements/nginx/
+    image: nginx:inception
+    container_name: nginx
+    depends_on:
+      - wordpress
+    volumes:
+      - wordpress-volume:/var/www/wordpress
+      - adminer-volume:/var/www/adminer
+    networks:
+      - inception
+    ports:
+      - 443:443
+
+  adminer:
+    build: ./requirements/bonus/adminer/
+    image: adminer:inception
+    container_name: adminer
+    volumes:
+      - adminer-volume:/var/www/adminer
+    depends_on:
+      - mariadb
+    networks:
+      - inception
+
   static-website:
     build: ./requirements/bonus/static-website/
     image: static-website:inception
@@ -56,19 +81,6 @@ services:
       - inception
     ports:
       - 4242:4242
-
-  nginx:
-    build: ./requirements/nginx/
-    image: nginx:inception
-    container_name: nginx
-    depends_on:
-      - wordpress
-    volumes:
-      - wordpress-volume:/var/www/html
-    networks:
-      - inception
-    ports:
-      - 443:443
 
   uptime-kuma:
     build: ./requirements/bonus/uptime-kuma/
@@ -100,6 +112,14 @@ volumes:
       o: bind
       type: none
       device: /home/revieira/data/wordpress
+
+  adminer-volume:
+    name: adminer-volume
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/revieira/data/adminer
 
   uptime-kuma-volume:
     name: uptime-kuma-volume
