@@ -2,13 +2,8 @@ FROM debian:oldstable
 
 RUN apt update &&  apt upgrade -y && \
 	apt install -y \
-	nginx \
-	openssl && \
+	nginx && \
 	rm -rf /var/lib/apt/lists/*
-
-RUN openssl req -batch -x509 -sha256 -nodes -newkey rsa:2048 -days 365 \
-	-keyout /etc/ssl/private/localhost.key \
-	-out /etc/ssl/certs/localhost.crt
 
 COPY ./tools/index.html /usr/share/nginx/html
 
