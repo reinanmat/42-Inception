@@ -15,6 +15,10 @@ if [ -f /var/www/wordpress/wp-config-sample.php ]; then
 		"$WP_USER" "$WP_EMAIL" \
 		--user_pass=$WP_PASSWORD \
 		--role='author'
+	
+	wp plugin install redis-cache --activate --allow-root
 fi
+
+wp redis enable --all --allow-root
 
 exec php-fpm7.4 -F

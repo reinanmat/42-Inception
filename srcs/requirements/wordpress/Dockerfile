@@ -18,6 +18,8 @@ RUN chmod +x /usr/local/bin/wp
 RUN wp core download --allow-root --path=/var/www/wordpress
 
 RUN mkdir /run/php
+RUN chown -R www-data:www-data /var/www/wordpress
+RUN chmod 755 /var/www/wordpress
 
 COPY conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 COPY conf/wp-config.php /var/www/wordpress/wp-config.php
