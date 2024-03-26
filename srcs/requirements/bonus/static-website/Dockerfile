@@ -6,8 +6,9 @@ RUN apt update &&  apt upgrade -y && \
 	rm -rf /var/lib/apt/lists/*
 
 COPY ./tools/index.html /usr/share/nginx/html
-
 COPY ./conf/nginx.conf /etc/nginx/conf.d
-RUN chmod 755 /var/www/html
+
+RUN chmod 755 /var/www/html && \
+	chown -R www-data:www-data /var/www/html
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]

@@ -13,8 +13,8 @@ RUN openssl req -batch -x509 -sha256 -nodes -newkey rsa:2048 -days 365 \
 
 COPY ./conf/nginx.conf /etc/nginx/conf.d
 
-# RUN chmod 755 /var/www/html
-# RUN chown -R www-data:www-data /var/www/html
+RUN chmod 755 /var/www/html && \
+	chown -R www-data:www-data /var/www/html
 
 EXPOSE 443
 

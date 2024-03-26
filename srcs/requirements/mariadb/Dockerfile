@@ -15,8 +15,8 @@ RUN mkdir -p /var/run/mysqld && \
 
 COPY ./config/my.cnf /etc/mysql/my.cnf
 COPY ./tools/mariadbinit.sh /tmp/mariadbinit.sh
-RUN chmod +x /tmp/mariadbinit.sh
 
-RUN /tmp/mariadbinit.sh
+RUN chmod +x /tmp/mariadbinit.sh && \
+	/tmp/mariadbinit.sh
 
 CMD ["mysqld_safe"]
