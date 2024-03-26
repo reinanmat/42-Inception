@@ -12,7 +12,7 @@ setup:
 	sudo mkdir -p $(VOLUMES)
 
 up: setup
-	docker-compose -f $(DOCKER_COMPOSE_PATH) up -d --build
+	docker-compose -f $(DOCKER_COMPOSE_PATH) up -d
 
 down:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) down
