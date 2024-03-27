@@ -1,15 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 	<head>
 		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title></title>
-		<link href="css/style.css" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Inception Static Website</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 0;
+				padding: 0;
+				background-color: #f4f4f4;
+			}
+			.container {
+				max-width: 800px;
+				margin: 20px auto;
+				padding: 20px;
+				border-radius: 8px;
+				box-shadow: 0 0 10px rgba(0,0,0,0.1);
+			}
+			h1 {
+				text-align: center;
+			}
+			.service {
+				display: flex;
+				align-items: center;
+				margin-bottom: 40px;
+			}
+			.service img {
+				margin-right: 20px;
+				max-width: 200px;
+				height: auto;
+			}
+			.service-text {
+				flex-grow: 1;
+			}
+			.service p {
+				text-align: justify;
+			}
+		</style>
 	</head>
 	<body>
-		<h1>Hello World!</h1>
-		<p><a href="https://revieira.42.fr:443">WORDPRESS</a></p>
-		<p><a href="https://revieira.42.fr:443/adminer">ADMINER</a></p>
-		<p><a href="http://revieira.42.fr:3001">UPTIME-KUMA</a></p>
+		<div class="container">
+			<h1>Serviços</h1>
+			<div class="service">
+				<img src="imgs/wordpress-icon.svg" alt="WordPress Icon" >
+				<div class="service-text">
+					<h2>WordPress</h2>
+					<p>WordPress é um sistema de gerenciamento de conteúdo (CMS) de código aberto usado principalmente para criar sites e blogs.</p>
+				</div>
+			</div>
+			<div class="service">
+				<img src="imgs/nginx-icon.svg" alt="Nginx Icon">
+				<div class="service-text">
+					<h2>Nginx</h2>
+					<p>Nginx é um servidor web de código aberto que também pode ser usado como um proxy reverso, balanceador de carga, cache HTTP e muito mais.</p>
+				</div>
+			</div>
+			<div class="service">
+				<img src="imgs/mariadb-icon.svg" alt="MariaDB Icon">
+				<div class="service-text">
+					<h2>MariaDB</h2>
+					<p>MariaDB é um sistema de gerenciamento de banco de dados relacional de código aberto compatível com MySQL.</p>
+				</div>
+			</div>
+			<div class="service">
+				<img src="imgs/adminer-icon.svg" alt="Adminer Icon">
+				<div class="service-text">
+					<h2>Adminer</h2>
+					<p>Adminer é uma ferramenta de gerenciamento de banco de dados em uma única página para MySQL, PostgreSQL, SQLite, MS SQL e Oracle.</p>
+				</div>
+			</div>
+			<div class="service">
+				<img src="imgs/uptime-kuma-icon.svg" alt="Uptime Kuma Icon">
+				<div class="service-text">
+					<h2>Uptime Kuma</h2>
+					<p>Uptime Kuma é uma aplicação de monitoramento de tempo de atividade simples e moderna, gratuita e de código aberto.</p>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
