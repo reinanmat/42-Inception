@@ -24,7 +24,7 @@ setup:
 	fi
 
 up: setup
-	docker-compose -f $(DOCKER_COMPOSE_PATH) up -d
+	docker-compose -f $(DOCKER_COMPOSE_PATH) up -d --build
 
 down:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) down
