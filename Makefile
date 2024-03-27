@@ -1,5 +1,7 @@
 LOGIN=revieira
 DOCKER_COMPOSE_PATH=./srcs/docker-compose.yml
+DOT_ENV=https://github.com/reinanmat/42-Inception/raw/master/srcs/.env
+
 VOLUMES= /home/$(LOGIN)/data/mariadb \
 		 /home/$(LOGIN)/data/wordpress \
 		 /home/$(LOGIN)/data/adminer \
@@ -8,8 +10,13 @@ VOLUMES= /home/$(LOGIN)/data/mariadb \
 all: up
 
 setup:
-	sudo bash -c 'cat /etc/hosts | grep $(LOGIN) &> /dev/null || echo "127.0.0.1 $(LOGIN).42.fr" >> /etc/hosts'
 	sudo mkdir -p $(VOLUMES)
+	@if [ ! -f ./srcs/.env ]; then \
+		wget -O ./srcs/.env $(DOT_ENV); \
+	fi
+	@if ! grep -q $(LOGIN) /etc/hosts; then \
+		echo "127.0.0.1 $(LOGIN).42.fr" | sudo tee -a /etc/hosts > /dev/null; \
+	fi
 
 up: setup
 	docker-compose -f $(DOCKER_COMPOSE_PATH) up -d
@@ -35,6 +42,11 @@ ls:
 	@echo "\nNETWORKS:"
 	@docker network ls -f type=custom
 
+links:
+	@echo "wordpress: https://42.$(LOGIN).fr:443"
+	@echo "uptime-kuma: http://42.$(LOGIN).fr:3001:"
+	@echo "static-website: https://42.$(LOGIN).fr/static-website"
+
 clean:
 	docker image prune -af
 
@@ -43,4 +55,4 @@ fclean: down delete-volumes
 
 re: fclean all
 
-.PHONY: all up down delete-volumes ls clean fclean re
+.PHONY: all up down delete-volumes ls links clean fclean re
