@@ -43,9 +43,10 @@ ls:
 	@docker network ls -f type=custom
 
 links:
-	@echo "wordpress: https://42.$(LOGIN).fr:443"
-	@echo "uptime-kuma: http://42.$(LOGIN).fr:3001:"
-	@echo "static-website: https://42.$(LOGIN).fr/static-website"
+	@echo "wordpress:	https://$(LOGIN).42.fr:443"
+	@echo "adminer:	https://$(LOGIN).42.fr:443/adminer"
+	@echo "static-website:	https://$(LOGIN).42.fr:443/static-website"
+	@echo "uptime-kuma:	http://$(LOGIN).42.fr:3001"
 
 clean:
 	docker image prune -af
